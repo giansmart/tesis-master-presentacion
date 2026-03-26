@@ -1,0 +1,184 @@
+\begin{tikzpicture}[
+    arrow/.style={
+        -{Stealth[length=6pt, width=5pt]}, line width=1.2pt, color=#1
+    },
+    label box/.style={
+        font=\sffamily\small, text=black, align=left, text width=7cm
+    },
+    bold label/.style={
+        font=\sffamily\small\bfseries, text=#1
+    }
+]
+
+% ── Colores ──
+\definecolor{mainblue}{HTML}{0D47A1}
+\definecolor{accentteal}{HTML}{00897B}
+\definecolor{rawgray}{HTML}{616161}
+\definecolor{fftblue}{HTML}{1565C0}
+\definecolor{cwtgreen}{HTML}{2E7D32}
+\definecolor{wstpurp}{HTML}{5C6BC0}
+\definecolor{momorange}{HTML}{F57C00}
+\definecolor{bglight}{HTML}{F5F7FA}
+
+% ════════════════════════════════════════
+% TÍTULO
+% ════════════════════════════════════════
+\node[font=\sffamily\Large\bfseries, text=mainblue, align=center]
+    at (6, 1.5) {La Búsqueda de la Mejor Representación};
+\node[font=\sffamily\small, text=black!60, align=center]
+    at (6, 0.8) {¿Cómo debe observar la señal el algoritmo? Evaluamos 5 transformaciones fundamentales.};
+
+% ════════════════════════════════════════
+% SEÑAL DE ENTRADA (onda sinusoidal)
+% ════════════════════════════════════════
+\begin{scope}[shift={(-1.5, -2.5)}]
+    % Caja de fondo
+    \fill[mainblue!8, rounded corners=6pt] (-1.8, -1.2) rectangle (1.8, 1.2);
+    \draw[mainblue!40, rounded corners=6pt, line width=0.8pt] (-1.8, -1.2) rectangle (1.8, 1.2);
+
+    % Onda sísmica
+    \draw[mainblue, line width=1.5pt, smooth, samples=80, domain=-1.4:1.4]
+        plot (\x, {0.7*sin(900*\x)*exp(-abs(\x)*1.2)});
+    \draw[accentteal, line width=1pt, smooth, samples=80, domain=-1.4:1.4]
+        plot (\x, {0.4*sin(1200*\x+60)*exp(-abs(\x)*1.5) - 0.1});
+
+    \node[font=\sffamily\tiny\bfseries, text=mainblue] at (0, -0.9) {Señal S1 + S2};
+\end{scope}
+
+% ════════════════════════════════════════
+% PRISMA (triángulo que "descompone")
+% ════════════════════════════════════════
+\begin{scope}[shift={(2.2, -2.5)}]
+    % Prisma triangular con gradiente simulado
+    \fill[mainblue!15] (0, 0.9) -- (-0.7, -0.7) -- (0.7, -0.7) -- cycle;
+    \fill[mainblue!25] (0, 0.9) -- (0.7, -0.7) -- (1.0, -0.4) -- (0.3, 1.2) -- cycle;
+    \draw[mainblue!60, line width=0.8pt] (0, 0.9) -- (-0.7, -0.7) -- (0.7, -0.7) -- cycle;
+    \draw[mainblue!60, line width=0.8pt] (0, 0.9) -- (0.3, 1.2) -- (1.0, -0.4) -- (0.7, -0.7);
+\end{scope}
+
+% Flecha entrada → prisma
+\draw[arrow=mainblue] (0.1, -2.5) -- (1.3, -2.5);
+
+% ════════════════════════════════════════
+% 5 FLECHAS divergentes desde el prisma
+% ════════════════════════════════════════
+\draw[arrow=rawgray]  (3.1, -1.8) -- (4.8, -0.5);
+\draw[arrow=fftblue]  (3.2, -2.1) -- (4.8, -1.7);
+\draw[arrow=cwtgreen]  (3.2, -2.5) -- (4.8, -2.9);
+\draw[arrow=wstpurp]  (3.2, -2.9) -- (4.8, -4.1);
+\draw[arrow=momorange] (3.1, -3.2) -- (4.8, -5.3);
+
+% ════════════════════════════════════════
+% REPRESENTACIÓN 1: Raw (barras de voltaje)
+% ════════════════════════════════════════
+\begin{scope}[shift={(5.5, -0.5)}]
+    \fill[rawgray!8, rounded corners=3pt] (-0.5, -0.45) rectangle (0.5, 0.45);
+    \draw[rawgray!40, rounded corners=3pt, line width=0.5pt] (-0.5, -0.45) rectangle (0.5, 0.45);
+    % Barras irregulares (voltaje crudo)
+    \fill[rawgray!70] (-0.35, -0.3) rectangle (-0.25, -0.1);
+    \fill[rawgray]     (-0.2, -0.3) rectangle (-0.1, 0.25);
+    \fill[rawgray!80] (-0.05, -0.3) rectangle (0.05, 0.1);
+    \fill[rawgray!50] (0.1, -0.3)  rectangle (0.2, -0.05);
+    \fill[rawgray!60] (0.25, -0.3) rectangle (0.35, 0.0);
+\end{scope}
+\node[label box, anchor=west] at (6.3, -0.5) {
+    \textcolor{rawgray}{\textbf{Voltajes Crudos (Raw):}} El voltaje
+    temporal puro sin alteración.
+};
+
+% ════════════════════════════════════════
+% REPRESENTACIÓN 2: FFT (onda sinusoidal)
+% ════════════════════════════════════════
+\begin{scope}[shift={(5.5, -1.7)}]
+    \fill[fftblue!8, rounded corners=3pt] (-0.5, -0.45) rectangle (0.5, 0.45);
+    \draw[fftblue!40, rounded corners=3pt, line width=0.5pt] (-0.5, -0.45) rectangle (0.5, 0.45);
+    \draw[fftblue, line width=1pt, smooth, samples=40, domain=-0.35:0.35]
+        plot (\x, {0.3*sin(1400*\x)});
+\end{scope}
+\node[label box, anchor=west] at (6.3, -1.7) {
+    \textcolor{fftblue}{\textbf{Transformada de Fourier (FFT):}} Espectros
+    de magnitud en el dominio de frecuencia.
+};
+
+% ════════════════════════════════════════
+% REPRESENTACIÓN 3: CWT (escalograma — grid de colores)
+% ════════════════════════════════════════
+\begin{scope}[shift={(5.5, -2.9)}]
+    \fill[cwtgreen!8, rounded corners=3pt] (-0.5, -0.45) rectangle (0.5, 0.45);
+    \draw[cwtgreen!40, rounded corners=3pt, line width=0.5pt] (-0.5, -0.45) rectangle (0.5, 0.45);
+    % Mini escalograma (grid de colores)
+    \foreach \x/\c in {-0.38/red!60, -0.24/orange!70, -0.10/yellow!80, 0.04/green!60, 0.18/cyan!60, 0.32/blue!50} {
+        \foreach \y/\o in {-0.28/40, -0.14/70, 0.0/100, 0.14/60, 0.28/30} {
+            \fill[\c!\o] (\x, \y) rectangle ++(0.12, 0.12);
+        }
+    }
+\end{scope}
+\node[label box, anchor=west] at (6.3, -2.9) {
+    \textcolor{cwtgreen}{\textbf{Wavelet Continua (CWT):}} Escalogramas
+    de tiempo y frecuencia.
+};
+
+% ════════════════════════════════════════
+% REPRESENTACIÓN 4: WST (coeficientes — bloques escalonados)
+% ════════════════════════════════════════
+\begin{scope}[shift={(5.5, -4.1)}]
+    \fill[wstpurp!8, rounded corners=3pt] (-0.5, -0.45) rectangle (0.5, 0.45);
+    \draw[wstpurp!40, rounded corners=3pt, line width=0.5pt] (-0.5, -0.45) rectangle (0.5, 0.45);
+    % Bloques escalonados (scattering orders)
+    \fill[wstpurp!30] (-0.35, -0.25) rectangle (-0.05, -0.05);
+    \fill[wstpurp!50] (-0.35, 0.0)  rectangle (0.15, 0.2);
+    \fill[wstpurp!70] (-0.35, 0.22) rectangle (0.35, 0.35);
+    % Líneas de subdivisión
+    \draw[wstpurp!40, line width=0.3pt] (-0.2, -0.25) -- (-0.2, -0.05);
+    \draw[wstpurp!40, line width=0.3pt] (-0.1, 0.0) -- (-0.1, 0.2);
+    \draw[wstpurp!40, line width=0.3pt] (0.0, 0.0) -- (0.0, 0.2);
+    \draw[wstpurp!40, line width=0.3pt] (-0.15, 0.22) -- (-0.15, 0.35);
+    \draw[wstpurp!40, line width=0.3pt] (0.05, 0.22) -- (0.05, 0.35);
+    \draw[wstpurp!40, line width=0.3pt] (0.2, 0.22) -- (0.2, 0.35);
+\end{scope}
+\node[label box, anchor=west] at (6.3, -4.1) {
+    \textcolor{wstpurp}{\textbf{Wavelet Scattering (WST):}} Coeficientes
+    compactos estables a deformaciones.
+};
+
+% ════════════════════════════════════════
+% REPRESENTACIÓN 5: MOMENT (red neuronal — nodos)
+% ════════════════════════════════════════
+\begin{scope}[shift={(5.5, -5.3)}]
+    \fill[momorange!8, rounded corners=3pt] (-0.5, -0.45) rectangle (0.5, 0.45);
+    \draw[momorange!40, rounded corners=3pt, line width=0.5pt] (-0.5, -0.45) rectangle (0.5, 0.45);
+    % Red neuronal simplificada (3 capas)
+    \foreach \y in {-0.2, 0, 0.2} {
+        \fill[momorange!60] (-0.3, \y) circle (0.06);
+    }
+    \foreach \y in {-0.25, -0.05, 0.15, 0.35} {
+        \fill[momorange!80] (0, \y-0.05) circle (0.06);
+    }
+    \foreach \y in {-0.15, 0.05, 0.25} {
+        \fill[momorange] (0.3, \y) circle (0.06);
+    }
+    % Conexiones
+    \foreach \a in {-0.2, 0, 0.2} {
+        \foreach \b in {-0.25, -0.05, 0.15, 0.35} {
+            \draw[momorange!30, line width=0.2pt] (-0.3, \a) -- (0, \b-0.05);
+        }
+    }
+    \foreach \a in {-0.25, -0.05, 0.15, 0.35} {
+        \foreach \b in {-0.15, 0.05, 0.25} {
+            \draw[momorange!30, line width=0.2pt] (0, \a-0.05) -- (0.3, \b);
+        }
+    }
+\end{scope}
+\node[label box, anchor=west] at (6.3, -5.3) {
+    \textcolor{momorange}{\textbf{Modelo Fundacional (MOMENT):}} Embeddings
+    genéricos de un modelo pre-entrenado.
+};
+
+% ════════════════════════════════════════
+% FONDO GENERAL
+% ════════════════════════════════════════
+\begin{scope}[on background layer]
+    \fill[bglight, rounded corners=10pt] (-3.8, 2.2) rectangle (14, -6.2);
+\end{scope}
+
+\end{tikzpicture}

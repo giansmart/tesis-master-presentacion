@@ -1,0 +1,143 @@
+\begin{tikzpicture}[
+    % Estilos de nodos
+    repr/.style={
+        rectangle, rounded corners=4pt, draw=#1, fill=#1!12,
+        minimum width=3.8cm, minimum height=0.9cm,
+        font=\sffamily\small\bfseries, text=black, align=center,
+        line width=0.8pt
+    },
+    extr/.style={
+        rectangle, rounded corners=4pt, draw=#1, fill=#1!12,
+        minimum width=3.8cm, minimum height=0.9cm,
+        font=\sffamily\small\bfseries, text=black, align=center,
+        line width=0.8pt
+    },
+    clas/.style={
+        rectangle, rounded corners=4pt, draw=#1, fill=#1!12,
+        minimum width=3.2cm, minimum height=0.9cm,
+        font=\sffamily\small\bfseries, text=black, align=center,
+        line width=0.8pt
+    },
+    stage label/.style={
+        font=\sffamily\large\bfseries, text=#1
+    },
+    arrow/.style={
+        -{Stealth[length=5pt, width=4pt]}, line width=0.7pt, color=#1
+    },
+    group box/.style={
+        rounded corners=8pt, draw=#1!50, fill=#1!4,
+        line width=1pt, dashed
+    }
+]
+
+% ── Definir colores ──
+\definecolor{rawgray}{HTML}{757575}
+\definecolor{fftblue}{HTML}{1565C0}
+\definecolor{cwtgreen}{HTML}{2E7D32}
+\definecolor{wstgreen}{HTML}{388E3C}
+\definecolor{momorange}{HTML}{F57C00}
+\definecolor{pcaamber}{HTML}{FF8F00}
+\definecolor{aeindigo}{HTML}{5C6BC0}
+\definecolor{dirteal}{HTML}{00897B}
+\definecolor{svmred}{HTML}{C62828}
+\definecolor{rfgreen}{HTML}{2E7D32}
+\definecolor{cnnpurp}{HTML}{8E24AA}
+\definecolor{swinteal}{HTML}{00695C}
+
+% ════════════════════════════════════════
+% STAGE 1: Representaciones (columna izq)
+% ════════════════════════════════════════
+\node[repr=rawgray]   (raw)  at (0, 0)    {Raw (señal cruda)};
+\node[repr=fftblue]   (fft)  at (0, -1.4) {FFT (log-magnitud)};
+\node[repr=cwtgreen]  (cwt)  at (0, -2.8) {CWT (escalogramas)};
+\node[repr=wstgreen]  (wst)  at (0, -4.2) {WST (scattering)};
+\node[repr=momorange] (mom)  at (0, -5.6) {MOMENT (embeddings)};
+
+% ════════════════════════════════════════
+% STAGE 2: Extracción (columna central)
+% ════════════════════════════════════════
+\node[extr=pcaamber]  (pca)  at (6.5, -0.7)  {Reducción Lineal (PCA)};
+\node[extr=aeindigo]  (ae)   at (6.5, -2.8)  {Autoencoder Conv 1D};
+\node[extr=dirteal]   (dir)  at (6.5, -4.9)  {Directo};
+
+% ════════════════════════════════════════
+% STAGE 3: Clasificación (columna derecha)
+% ════════════════════════════════════════
+\node[clas=svmred]   (svm1)  at (12.5, 0.3)   {SVM};
+\node[clas=rfgreen]  (rf1)   at (12.5, -0.7)  {Random Forest};
+\node[clas=svmred]   (svm2)  at (12.5, -1.7)  {SVM};
+\node[clas=rfgreen]  (rf2)   at (12.5, -2.7)  {Random Forest};
+\node[clas=cnnpurp]  (cnn)   at (12.5, -3.7)  {CNN Head};
+\node[clas=swinteal] (swin)  at (12.5, -4.7)  {Swin-Tiny};
+\node[clas=svmred]   (svm3)  at (12.5, -5.7)  {SVM};
+\node[clas=rfgreen]  (rf3)   at (12.5, -6.7)  {Random Forest};
+
+% ════════════════════════════════════════
+% FLECHAS Stage 1 → Stage 2
+% ════════════════════════════════════════
+% Raw → PCA
+\draw[arrow=rawgray]  (raw.east)  -- (pca.west);
+% FFT → PCA y AE
+\draw[arrow=fftblue]  (fft.east)  -- (pca.west);
+\draw[arrow=fftblue]  (fft.east)  -- (ae.west);
+% CWT → Directo
+\draw[arrow=cwtgreen] (cwt.east)  -- (dir.west);
+% WST → Directo
+\draw[arrow=wstgreen] (wst.east)  -- (dir.west);
+% MOMENT → Directo
+\draw[arrow=momorange](mom.east)  -- (dir.west);
+
+% ════════════════════════════════════════
+% FLECHAS Stage 2 → Stage 3
+% ════════════════════════════════════════
+% PCA → SVM, RF (raw + fft comparten salida)
+\draw[arrow=pcaamber] (pca.east)  -- (svm1.west);
+\draw[arrow=pcaamber] (pca.east)  -- (rf1.west);
+% AE → SVM, RF, CNN
+\draw[arrow=aeindigo] (ae.east)   -- (svm2.west);
+\draw[arrow=aeindigo] (ae.east)   -- (rf2.west);
+\draw[arrow=aeindigo] (ae.east)   -- (cnn.west);
+% Directo → Swin, SVM, RF
+\draw[arrow=dirteal]  (dir.east)  -- (swin.west);
+\draw[arrow=dirteal]  (dir.east)  -- (svm3.west);
+\draw[arrow=dirteal]  (dir.east)  -- (rf3.west);
+
+% ════════════════════════════════════════
+% ETIQUETAS de pipeline (derecha)
+% ════════════════════════════════════════
+\node[right=0.3cm of svm1, font=\sffamily\scriptsize, text=rawgray]  {Raw+PCA+SVM};
+\node[right=0.3cm of rf1,  font=\sffamily\scriptsize, text=rawgray]  {Raw+PCA+RF};
+\node[right=0.3cm of svm2, font=\sffamily\scriptsize, text=aeindigo] {FFT+AE+SVM};
+\node[right=0.3cm of rf2,  font=\sffamily\scriptsize, text=aeindigo] {FFT+AE+RF};
+\node[right=0.3cm of cnn,  font=\sffamily\scriptsize, text=cnnpurp]  {FFT+AE+CNN};
+\node[right=0.3cm of swin, font=\sffamily\scriptsize, text=swinteal] {CWT+Swin-Tiny};
+\node[right=0.3cm of svm3, font=\sffamily\scriptsize, text=dirteal]  {WST/MOM+SVM};
+\node[right=0.3cm of rf3,  font=\sffamily\scriptsize, text=dirteal]  {WST/MOM+RF};
+
+% ════════════════════════════════════════
+% ETIQUETAS de stage (arriba)
+% ════════════════════════════════════════
+\node[stage label=fftblue]  at (0,    2.0) {Stage 1: Representación};
+\node[stage label=pcaamber] at (6.5,  2.0) {Stage 2: Extracción};
+\node[stage label=rfgreen]  at (12.5, 2.0) {Stage 3: Clasificación};
+
+% ════════════════════════════════════════
+% CAJAS de agrupación (fondo)
+% ════════════════════════════════════════
+\begin{scope}[on background layer]
+    \node[group box=fftblue,
+          fit=(raw)(mom), inner sep=12pt] {};
+    \node[group box=pcaamber,
+          fit=(pca)(dir), inner sep=12pt] {};
+    \node[group box=rfgreen,
+          fit=(svm1)(rf3), inner sep=12pt] {};
+\end{scope}
+
+% ════════════════════════════════════════
+% NOTA al pie: total pipelines
+% ════════════════════════════════════════
+\node[font=\sffamily\small, text=black!60, align=center]
+    at (6.5, -8.4)
+    {12 pipelines evaluados bajo las mismas condiciones de validación cruzada (StratifiedGroupKFold, 5 folds)};
+
+\end{tikzpicture}
