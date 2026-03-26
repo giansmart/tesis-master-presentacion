@@ -79,18 +79,18 @@
 \setbeamertemplate{footline}{}
 \setbeamercolor{background canvas}{bg=bglight}
 \begin{frame}[plain]
-    % Fondo con ilustración del aislador
+    % Fondo con ilustración del aislador (más transparente)
     \begin{tikzpicture}[remember picture, overlay]
-        \node[anchor=center] at (current page.center) {%
+        \node[anchor=center, opacity=0.5] at (current page.center) {%
             \includegraphics[width=\paperwidth, height=\paperheight]{p1.png}%
         };
     \end{tikzpicture}
 
     \vspace{0.4cm}
 
-    % Layout: título a la izquierda (60% del ancho)
-    \begin{columns}[T]
-        \begin{column}{0.70\textwidth}
+    % Layout: título a la izquierda con padding
+    \hspace{0.8cm}\begin{columns}[T]
+        \begin{column}{0.65\textwidth}
             % Título principal
             {\fontsize{16}{10}\selectfont\bfseries\color{mainblue}%
                 CLASIFICACIÓN DE DAÑO EN\\
@@ -143,15 +143,16 @@
         };
     \end{tikzpicture}
 
+    \vspace{0.1cm}
+
+    \hspace{0.6cm}{\normalsize\bfseries\color{mainblue} Problema y Motivación}
+
     \vspace{0.2cm}
 
-    \hspace{0.4cm}{\Large\bfseries\color{mainblue} Problema y Motivación}
-
-    \vspace{0.3cm}
-
-    \hspace{0.5cm}\begin{minipage}{0.55\textwidth}
+    \hspace{0.6cm}\begin{minipage}{0.88\textwidth}
+    \small
     \begin{itemize}
-        \setlength\itemsep{0.45em}
+        \setlength\itemsep{0.3em}
         \item Perú se ubica en el Cinturón de Fuego del Pacífico --- alta actividad sísmica
         \item Los aisladores sísmicos (LRB) protegen edificios críticos, pero se degradan con el tiempo
         \item La inspección actual es \textbf{visual y manual}:
