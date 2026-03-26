@@ -1,35 +1,55 @@
 \documentclass[aspectratio=169, 11pt]{beamer}
 
-% ── Tema y colores ──
-\usetheme{Madrid}
-\usecolortheme{default}
+% ── Tema minimalista ──
+\usetheme{default}
+\useinnertheme{rectangles}
 
+% ── Colores (idénticos al PPT) ──
 \definecolor{mainblue}{HTML}{0D47A1}
 \definecolor{medblue}{HTML}{1E88E5}
 \definecolor{accentgreen}{HTML}{2E7D32}
 \definecolor{darkgray}{HTML}{333333}
 \definecolor{lightgray}{HTML}{757575}
+\definecolor{bglight}{HTML}{F5F7FA}
+\definecolor{subtitleblue}{HTML}{BBDEFB}
+\definecolor{infoblue}{HTML}{E3F2FD}
+\definecolor{fadeblue}{HTML}{90CAF9}
 
+% Colores de estructura
 \setbeamercolor{structure}{fg=mainblue}
-\setbeamercolor{palette primary}{bg=mainblue, fg=white}
-\setbeamercolor{palette secondary}{bg=medblue, fg=white}
-\setbeamercolor{palette tertiary}{bg=mainblue!80, fg=white}
+\setbeamercolor{normal text}{fg=darkgray}
 \setbeamercolor{frametitle}{bg=mainblue, fg=white}
-\setbeamercolor{title}{fg=white}
-\setbeamercolor{subtitle}{fg=white!85}
 \setbeamercolor{item}{fg=mainblue}
+\setbeamercolor{subitem}{fg=medblue}
 \setbeamercolor{block title}{bg=mainblue, fg=white}
-\setbeamercolor{block body}{bg=mainblue!5}
+\setbeamercolor{block body}{bg=mainblue!5, fg=darkgray}
+\setbeamercolor{background canvas}{bg=bglight}
 
-\setbeamerfont{title}{size=\Large, series=\bfseries}
-\setbeamerfont{frametitle}{size=\large, series=\bfseries}
-\setbeamerfont{subtitle}{size=\normalsize}
+% Fuentes
+\setbeamerfont{frametitle}{size=\Large, series=\bfseries}
 
-% Quitar barra de navegación
+% Sin barra de navegación
 \setbeamertemplate{navigation symbols}{}
-% Números de slide en footer
-\setbeamertemplate{footline}{
-    \hfill\insertframenumber/\inserttotalframenumber\hspace{0.5cm}\vspace{0.3cm}
+
+% Footer personalizado: texto izquierda + número derecha
+\setbeamertemplate{footline}{%
+    \leavevmode%
+    \hbox{%
+        \begin{beamercolorbox}[wd=.7\paperwidth, ht=2.5ex, dp=1ex, left]{fg=lightgray}%
+            \hspace{0.5cm}{\color{lightgray}\scriptsize Clasificación de Daño en Aisladores Sísmicos --- Tesis de Maestría}%
+        \end{beamercolorbox}%
+        \begin{beamercolorbox}[wd=.3\paperwidth, ht=2.5ex, dp=1ex, right]{fg=lightgray}%
+            {\color{lightgray}\scriptsize\insertframenumber/\inserttotalframenumber}\hspace{0.5cm}%
+        \end{beamercolorbox}%
+    }%
+    \vskip0pt%
+}
+
+% Barra azul superior en cada frame (excepto plain)
+\addtobeamertemplate{frametitle}{}{%
+    \begin{tikzpicture}[remember picture, overlay]
+        \fill[medblue] (current page.north west) rectangle ([yshift=-0.06cm]current page.north east);
+    \end{tikzpicture}
 }
 
 % ── Paquetes ──
@@ -40,35 +60,56 @@
 \usepackage{tikz}
 \usetikzlibrary{positioning, arrows.meta, fit, backgrounds, calc, decorations.pathmorphing}
 \usepackage{booktabs}
-\usepackage{multicol}
 
 \graphicspath{{images/}}
 
-% ── Metadata ──
-\title[DeepSolation]{Clasificación de Daño en Aisladores Sísmicos\\mediante Machine Learning y Deep Learning}
-\subtitle{Un Análisis Comparativo con Señales de Vibración Ambiental}
-\author{Tesis de Maestría en Data Science e Inteligencia Artificial}
-\institute{Universidad de Ingeniería y Tecnología --- UTEC}
-\date{2026}
 
 % ════════════════════════════════════════════════════════════════
 \begin{document}
 
-% ── SLIDE 1: PORTADA ──
+% ── SLIDE 1: PORTADA (réplica exacta del PPT) ──
 {
+\setbeamertemplate{footline}{}
 \setbeamercolor{background canvas}{bg=mainblue}
 \begin{frame}[plain]
-    \vspace{1.5cm}
+    % Barra decorativa superior
+    \begin{tikzpicture}[remember picture, overlay]
+        \fill[medblue] (current page.north west) rectangle ([yshift=-0.08cm]current page.north east);
+        \fill[medblue] (current page.south west) rectangle ([yshift=0.08cm]current page.south east);
+    \end{tikzpicture}
+
+    \vspace{1.2cm}
+
+    % Título principal en mayúsculas
     \begin{center}
-        {\usebeamerfont{title}\usebeamercolor[fg]{title}\inserttitle\par}
-        \vspace{0.4cm}
-        {\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par}
-        \vspace{1.2cm}
-        {\color{white!85}\insertauthor\par}
+        {\fontsize{30}{36}\selectfont\bfseries\color{white}%
+            CLASIFICACIÓN DE DAÑO EN AISLADORES\\[4pt]
+            SÍSMICOS MEDIANTE MACHINE LEARNING\\[4pt]
+            Y DEEP LEARNING\par}
+
+        \vspace{0.5cm}
+
+        % Subtítulo
+        {\fontsize{18}{22}\selectfont\color{subtitleblue}%
+            Un Análisis Comparativo con Señales de Vibración Ambiental\par}
+
+        \vfill
+
+        % Información institucional
+        {\fontsize{15}{20}\selectfont\color{infoblue}%
+            Tesis de Maestría en Data Science e Inteligencia Artificial\par}
+
         \vspace{0.3cm}
-        {\color{white!70}\small\insertinstitute\par}
+
+        {\fontsize{13}{18}\selectfont\color{subtitleblue}%
+            Universidad de Ingeniería y Tecnología --- UTEC\par}
+
         \vspace{0.3cm}
-        {\color{white!60}\small\insertdate\par}
+
+        {\fontsize{13}{18}\selectfont\color{fadeblue}%
+            2026\par}
+
+        \vspace{0.8cm}
     \end{center}
 \end{frame}
 }
@@ -100,7 +141,7 @@
         Desarrollar y comparar pipelines de ML y DL para clasificar el nivel de daño en aisladores sísmicos a partir de señales de vibración ambiental.
     \end{block}
     \vspace{0.3cm}
-    \begin{enumerate}
+    \begin{description}
         \setlength\itemsep{0.3em}
         \item[\textbf{OE1:}] Comparar representaciones espectrales (FFT, CWT, WST, MOMENT, Raw)
         \item[\textbf{OE2:}] Evaluar combinaciones de extracción (PCA, AE) y clasificación (SVM, RF, CNN)
@@ -108,7 +149,7 @@
         \item[\textbf{OE4:}] Implementar validación anti-\textit{data leakage} (StratifiedGroupKFold)
         \item[\textbf{OE5:}] Analizar interpretabilidad del modelo CNN con Eigen-CAM
         \item[\textbf{OE6:}] Proponer arquitectura de despliegue productivo
-    \end{enumerate}
+    \end{description}
 \end{frame}
 
 
@@ -159,20 +200,20 @@
 \end{frame}
 
 
-% ── SLIDE 6: REPRESENTACIONES (TikZ) ──
+% ── SLIDE 6: REPRESENTACIONES (TikZ inline) ──
 \begin{frame}[plain]
     \centering
-    \resizebox{0.92\textwidth}{!}{
-        \input{diagrama_representaciones_content.tex}
+    \resizebox{0.92\textwidth}{!}{%
+        \input{diagrama_representaciones_content.tex}%
     }
 \end{frame}
 
 
-% ── SLIDE 7: 12 PIPELINES (TikZ) ──
+% ── SLIDE 7: 12 PIPELINES (TikZ inline) ──
 \begin{frame}[plain]
     \centering
-    \resizebox{0.88\textwidth}{!}{
-        \input{diagrama_pipelines_content.tex}
+    \resizebox{0.88\textwidth}{!}{%
+        \input{diagrama_pipelines_content.tex}%
     }
 \end{frame}
 
@@ -313,18 +354,20 @@
 \begin{frame}{Limitaciones y Trabajo Futuro}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
-            \textbf{\color{mainblue}Limitaciones}
+            \textbf{\large\color{mainblue} Limitaciones}
+            \vspace{0.3cm}
             \begin{itemize}
-                \setlength\itemsep{0.3em}
+                \setlength\itemsep{0.4em}
                 \item Variable de confusión (edificio): los clusters se alinean con el edificio
                 \item Dataset pequeño: 82 aisladores limita el DL
                 \item Solo clasificación binaria: insuficientes muestras N3
             \end{itemize}
         \end{column}
         \begin{column}{0.48\textwidth}
-            \textbf{\color{accentgreen}Trabajo Futuro}
+            \textbf{\large\color{accentgreen} Trabajo Futuro}
+            \vspace{0.3cm}
             \begin{itemize}
-                \setlength\itemsep{0.3em}
+                \setlength\itemsep{0.4em}
                 \item Incorporar aisladores de otras locaciones geográficas
                 \item Escalar dataset para que DL supere a ML
                 \item Clasificación multiclase (N1/N2/N3)
@@ -335,17 +378,31 @@
 \end{frame}
 
 
-% ── SLIDE 16: CIERRE ──
+% ── SLIDE 16: CIERRE (réplica exacta del PPT) ──
 {
+\setbeamertemplate{footline}{}
 \setbeamercolor{background canvas}{bg=mainblue}
 \begin{frame}[plain]
-    \vspace{2cm}
+    \begin{tikzpicture}[remember picture, overlay]
+        \fill[medblue] (current page.north west) rectangle ([yshift=-0.08cm]current page.north east);
+        \fill[medblue] (current page.south west) rectangle ([yshift=0.08cm]current page.south east);
+    \end{tikzpicture}
+
+    \vspace{1.8cm}
+
     \begin{center}
-        {\Huge\color{white}\bfseries ¡Gracias!\par}
+        {\fontsize{40}{48}\selectfont\bfseries\color{white} ¡Gracias!\par}
+
         \vspace{0.8cm}
-        {\color{white!85}\large Clasificación de Daño en Aisladores Sísmicos\\mediante Machine Learning y Deep Learning\par}
+
+        {\fontsize{16}{20}\selectfont\color{subtitleblue}%
+            Clasificación de Daño en Aisladores Sísmicos\\
+            mediante Machine Learning y Deep Learning\par}
+
         \vspace{1cm}
-        {\color{white!70}\Large ¿Preguntas?\par}
+
+        {\fontsize{20}{24}\selectfont\color{infoblue}%
+            ¿Preguntas?\par}
     \end{center}
 \end{frame}
 }
