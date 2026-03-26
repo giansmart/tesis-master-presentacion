@@ -4,13 +4,19 @@
 \usetheme{default}
 \useinnertheme{rectangles}
 
+% ── Tipografía moderna (Montserrat + Fira Sans) ──
+\usepackage[defaultfam,tabular,lining]{montserrat}
+\usepackage[T1]{fontenc}
+\renewcommand*\oldstylenums[1]{{\fontfamily{Montserrat-TOsF}\selectfont #1}}
+
 % ── Colores (idénticos al PPT) ──
-\definecolor{mainblue}{HTML}{0D47A1}
+\definecolor{mainblue}{HTML}{1B3A5C}
 \definecolor{medblue}{HTML}{1E88E5}
 \definecolor{accentgreen}{HTML}{2E7D32}
 \definecolor{darkgray}{HTML}{333333}
 \definecolor{lightgray}{HTML}{757575}
-\definecolor{bglight}{HTML}{F5F7FA}
+\definecolor{bglight}{HTML}{F0F2F5}
+\definecolor{gridcolor}{HTML}{D8DCE3}
 \definecolor{subtitleblue}{HTML}{BBDEFB}
 \definecolor{infoblue}{HTML}{E3F2FD}
 \definecolor{fadeblue}{HTML}{90CAF9}
@@ -25,8 +31,10 @@
 \setbeamercolor{block body}{bg=mainblue!5, fg=darkgray}
 \setbeamercolor{background canvas}{bg=bglight}
 
-% Fuentes
+% Fuentes Beamer
 \setbeamerfont{frametitle}{size=\Large, series=\bfseries}
+\setbeamerfont{title}{size=\Large, series=\bfseries}
+\setbeamerfont{block title}{series=\bfseries}
 
 % Sin barra de navegación
 \setbeamertemplate{navigation symbols}{}
@@ -54,7 +62,6 @@
 
 % ── Paquetes ──
 \usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
 \usepackage[spanish]{babel}
 \usepackage{graphicx}
 \usepackage{tikz}
@@ -67,50 +74,74 @@
 % ════════════════════════════════════════════════════════════════
 \begin{document}
 
-% ── SLIDE 1: PORTADA (réplica exacta del PPT) ──
+% ── SLIDE 1: PORTADA (réplica del PPT) ──
 {
 \setbeamertemplate{footline}{}
-\setbeamercolor{background canvas}{bg=mainblue}
+\setbeamercolor{background canvas}{bg=bglight}
 \begin{frame}[plain]
-    % Barra decorativa superior
+    % Fondo con patrón de grilla sutil
     \begin{tikzpicture}[remember picture, overlay]
-        \fill[medblue] (current page.north west) rectangle ([yshift=-0.08cm]current page.north east);
-        \fill[medblue] (current page.south west) rectangle ([yshift=0.08cm]current page.south east);
+        % Grilla
+        \foreach \x in {0,0.5,...,16} {
+            \draw[gridcolor, line width=0.2pt]
+                ([xshift=\x cm]current page.south west) -- ([xshift=\x cm]current page.north west);
+        }
+        \foreach \y in {0,0.5,...,10} {
+            \draw[gridcolor, line width=0.2pt]
+                ([yshift=\y cm]current page.south west) -- ([yshift=\y cm]current page.south east);
+        }
     \end{tikzpicture}
 
-    \vspace{1.2cm}
+    \vspace{0.3cm}
 
-    % Título principal en mayúsculas
-    \begin{center}
-        {\fontsize{30}{36}\selectfont\bfseries\color{white}%
-            CLASIFICACIÓN DE DAÑO EN AISLADORES\\[4pt]
-            SÍSMICOS MEDIANTE MACHINE LEARNING\\[4pt]
-            Y DEEP LEARNING\par}
+    % Layout: título a la izquierda
+    \begin{columns}[T]
+        \begin{column}{0.58\textwidth}
+            % Título principal
+            {\fontsize{26}{31}\selectfont\bfseries\color{mainblue}%
+                CLASIFICACIÓN DE DAÑO EN\\
+                AISLADORES\\
+                SÍSMICOS MEDIANTE MACHINE\\
+                LEARNING\\
+                Y DEEP LEARNING: UN ANÁLISIS\\
+                COMPARATIVO CON SEÑALES DE\\
+                VIBRACIÓN AMBIENTAL\par}
 
-        \vspace{0.5cm}
+            \vspace{0.6cm}
 
-        % Subtítulo
-        {\fontsize{18}{22}\selectfont\color{subtitleblue}%
-            Un Análisis Comparativo con Señales de Vibración Ambiental\par}
+            % Info del programa
+            {\fontsize{11}{14}\selectfont\color{darkgray}%
+                Tesis de Maestría en Ciencia de Datos e\\
+                Inteligencia Artificial y parte del Proyecto\\
+                DeepIsolation de ProCiencia\\
+                (2026)\par}
 
-        \vfill
+            \vspace{0.5cm}
 
-        % Información institucional
-        {\fontsize{15}{20}\selectfont\color{infoblue}%
-            Tesis de Maestría en Data Science e Inteligencia Artificial\par}
+            % Autor y asesor
+            {\fontsize{11}{14}\selectfont\color{darkgray}%
+                Autor: Giancarlo Poémape Lozano\\
+                Asesor: José Fiestas\par}
+        \end{column}
+        \begin{column}{0.40\textwidth}
+            % Espacio para ilustración del aislador
+            % (incluir imagen si se tiene, o dejar el espacio)
+            \vspace{0.5cm}
+            \begin{center}
+                \includegraphics[width=0.85\textwidth]{cap3_medicion_aislador_utec.jpeg}
+            \end{center}
+        \end{column}
+    \end{columns}
 
-        \vspace{0.3cm}
-
-        {\fontsize{13}{18}\selectfont\color{subtitleblue}%
-            Universidad de Ingeniería y Tecnología --- UTEC\par}
-
-        \vspace{0.3cm}
-
-        {\fontsize{13}{18}\selectfont\color{fadeblue}%
-            2026\par}
-
-        \vspace{0.8cm}
-    \end{center}
+    % Logos en esquina inferior derecha
+    \begin{tikzpicture}[remember picture, overlay]
+        \node[anchor=south east, xshift=-1.5cm, yshift=0.4cm]
+            at (current page.south east) {%
+                \includegraphics[height=1cm]{logo-prociencia.png}%
+                \hspace{0.4cm}%
+                \includegraphics[height=1cm]{logo-utec.png}%
+            };
+    \end{tikzpicture}
 \end{frame}
 }
 
@@ -378,7 +409,7 @@
 \end{frame}
 
 
-% ── SLIDE 16: CIERRE (réplica exacta del PPT) ──
+% ── SLIDE 16: CIERRE ──
 {
 \setbeamertemplate{footline}{}
 \setbeamercolor{background canvas}{bg=mainblue}
@@ -388,10 +419,10 @@
         \fill[medblue] (current page.south west) rectangle ([yshift=0.08cm]current page.south east);
     \end{tikzpicture}
 
-    \vspace{1.8cm}
+    \vspace{1.5cm}
 
     \begin{center}
-        {\fontsize{40}{48}\selectfont\bfseries\color{white} ¡Gracias!\par}
+        {\fontsize{44}{52}\selectfont\bfseries\color{white} ¡Gracias!\par}
 
         \vspace{0.8cm}
 
@@ -401,9 +432,19 @@
 
         \vspace{1cm}
 
-        {\fontsize{20}{24}\selectfont\color{infoblue}%
+        {\fontsize{22}{26}\selectfont\color{infoblue}%
             ¿Preguntas?\par}
     \end{center}
+
+    % Logos
+    \begin{tikzpicture}[remember picture, overlay]
+        \node[anchor=south east, xshift=-1.5cm, yshift=0.5cm]
+            at (current page.south east) {%
+                \includegraphics[height=0.8cm]{logo-prociencia.png}%
+                \hspace{0.3cm}%
+                \includegraphics[height=0.8cm]{logo-utec.png}%
+            };
+    \end{tikzpicture}
 \end{frame}
 }
 
