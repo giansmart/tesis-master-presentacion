@@ -79,63 +79,51 @@
 \setbeamertemplate{footline}{}
 \setbeamercolor{background canvas}{bg=bglight}
 \begin{frame}[plain]
-    % Fondo con patrón de grilla sutil
+    % Fondo con ilustración del aislador
     \begin{tikzpicture}[remember picture, overlay]
-        % Grilla
-        \foreach \x in {0,0.5,...,16} {
-            \draw[gridcolor, line width=0.2pt]
-                ([xshift=\x cm]current page.south west) -- ([xshift=\x cm]current page.north west);
-        }
-        \foreach \y in {0,0.5,...,10} {
-            \draw[gridcolor, line width=0.2pt]
-                ([yshift=\y cm]current page.south west) -- ([yshift=\y cm]current page.south east);
-        }
+        \node[anchor=center] at (current page.center) {%
+            \includegraphics[width=\paperwidth, height=\paperheight]{p1.png}%
+        };
     \end{tikzpicture}
 
-    \vspace{0.3cm}
+    \vspace{0.4cm}
 
-    % Layout: título a la izquierda
+    % Layout: título a la izquierda (60% del ancho)
     \begin{columns}[T]
-        \begin{column}{0.58\textwidth}
+        \begin{column}{0.55\textwidth}
             % Título principal
-            {\fontsize{26}{31}\selectfont\bfseries\color{mainblue}%
+            {\fontsize{20}{25}\selectfont\bfseries\color{mainblue}%
                 CLASIFICACIÓN DE DAÑO EN\\
-                AISLADORES\\
-                SÍSMICOS MEDIANTE MACHINE\\
-                LEARNING\\
+                AISLADORES SÍSMICOS MEDIANTE\\
+                MACHINE LEARNING\\
                 Y DEEP LEARNING: UN ANÁLISIS\\
                 COMPARATIVO CON SEÑALES DE\\
                 VIBRACIÓN AMBIENTAL\par}
 
-            \vspace{0.6cm}
+            \vspace{0.5cm}
 
             % Info del programa
-            {\fontsize{11}{14}\selectfont\color{darkgray}%
+            {\fontsize{10}{13}\selectfont\color{darkgray}%
                 Tesis de Maestría en Ciencia de Datos e\\
                 Inteligencia Artificial y parte del Proyecto\\
                 DeepIsolation de ProCiencia\\
                 (2026)\par}
 
-            \vspace{0.5cm}
+            \vspace{0.4cm}
 
             % Autor y asesor
-            {\fontsize{11}{14}\selectfont\color{darkgray}%
+            {\fontsize{10}{13}\selectfont\color{darkgray}%
                 Autor: Giancarlo Poémape Lozano\\
                 Asesor: José Fiestas\par}
         \end{column}
-        \begin{column}{0.40\textwidth}
-            % Espacio para ilustración del aislador
-            % (incluir imagen si se tiene, o dejar el espacio)
-            \vspace{0.5cm}
-            \begin{center}
-                \includegraphics[width=0.85\textwidth]{cap3_medicion_aislador_utec.jpeg}
-            \end{center}
+        \begin{column}{0.43\textwidth}
+            % Vacío — la ilustración viene del fondo p1.png
         \end{column}
     \end{columns}
 
     % Logos en esquina inferior derecha
     \begin{tikzpicture}[remember picture, overlay]
-        \node[anchor=south east, xshift=-1.5cm, yshift=0.4cm]
+        \node[anchor=south east, xshift=-0.8cm, yshift=0.4cm]
             at (current page.south east) {%
                 \includegraphics[height=1cm]{logo-prociencia.png}%
                 \hspace{0.4cm}%
@@ -147,9 +135,23 @@
 
 
 % ── SLIDE 2: PROBLEMA Y MOTIVACIÓN ──
-\begin{frame}{Problema y Motivación}
+\begin{frame}[plain]
+    % Fondo con ilustración del aislador
+    \begin{tikzpicture}[remember picture, overlay]
+        \node[anchor=center] at (current page.center) {%
+            \includegraphics[width=\paperwidth, height=\paperheight]{p15.png}%
+        };
+    \end{tikzpicture}
+
+    \vspace{0.2cm}
+
+    \hspace{0.4cm}{\Large\bfseries\color{mainblue} Problema y Motivación}
+
+    \vspace{0.3cm}
+
+    \hspace{0.5cm}\begin{minipage}{0.55\textwidth}
     \begin{itemize}
-        \setlength\itemsep{0.5em}
+        \setlength\itemsep{0.45em}
         \item Perú se ubica en el Cinturón de Fuego del Pacífico --- alta actividad sísmica
         \item Los aisladores sísmicos (LRB) protegen edificios críticos, pero se degradan con el tiempo
         \item La inspección actual es \textbf{visual y manual}:
@@ -163,6 +165,7 @@
             \item ¿Se puede clasificar automáticamente el daño en aisladores usando ML/DL sobre señales de vibración?
         \end{itemize}
     \end{itemize}
+    \end{minipage}
 \end{frame}
 
 
