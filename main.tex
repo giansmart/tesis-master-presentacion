@@ -287,27 +287,29 @@
 
 % ── SLIDE 10: EFICIENCIA COMPUTACIONAL ──
 \begin{frame}{Eficiencia Computacional}
+    \small
     \begin{columns}[T]
-        \begin{column}{0.45\textwidth}
-            \begin{itemize}
-                \setlength\itemsep{0.4em}
-                \item \textbf{FFT + PCA + RF:}
-                \begin{itemize}
-                    \item 24 segundos de entrenamiento
-                    \item 116~ms de inferencia
-                \end{itemize}
-                \item \textbf{FFT + AE + CNN:}
-                \begin{itemize}
-                    \item 27 minutos de entrenamiento
-                    \item 13~ms de inferencia (9x más rápido)
-                \end{itemize}
-                \item \textit{Trade-off}: RF práctico para reentrenamiento; AE+CNN más ágil en producción
-            \end{itemize}
+        \begin{column}{0.32\textwidth}
+            \begin{block}{FFT + PCA + RF}
+                24s entrenamiento\\
+                116~ms inferencia
+            \end{block}
         \end{column}
-        \begin{column}{0.53\textwidth}
-            \includegraphics[width=\textwidth]{cap4_tiempos_training_inferencia.png}
+        \begin{column}{0.32\textwidth}
+            \begin{block}{FFT + AE + CNN}
+                27~min entrenamiento\\
+                13~ms inferencia (9x más rápido)
+            \end{block}
+        \end{column}
+        \begin{column}{0.32\textwidth}
+            \begin{block}{Trade-off}
+                RF práctico para reentrenar; AE+CNN más ágil en producción
+            \end{block}
         \end{column}
     \end{columns}
+    \vfill
+    \centering
+    \includegraphics[width=0.92\textwidth]{cap4_tiempos_training_inferencia.png}
 \end{frame}
 
 
