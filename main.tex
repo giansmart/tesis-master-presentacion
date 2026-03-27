@@ -356,8 +356,28 @@
 
 % ── SLIDE 13: RADAR MULTIDIMENSIONAL ──
 \begin{frame}{Perfil Multidimensional de los Pipelines}
-    \centering
-    \includegraphics[height=0.85\textheight]{cap4_radar_pipelines.png}
+    \begin{columns}[c]
+        \begin{column}{0.62\textwidth}
+            \centering
+            \includegraphics[height=0.78\textheight]{cap4_radar_pipelines_cropped.png}
+        \end{column}
+        \begin{column}{0.35\textwidth}
+            \footnotesize
+            \begin{tikzpicture}
+                \newcommand{\legenditem}[4]{%
+                    \draw[#1, line width=1.2pt, #2] (0, #3) -- ++(0.6, 0);
+                    \node[anchor=west, font=\footnotesize] at (0.75, #3) {#4};
+                }
+                \legenditem{blue}{solid}{0}{FFT+PCA+RF}
+                \legenditem{blue!70!purple}{solid}{-0.55}{FFT+AE+CNN}
+                \legenditem{blue!50}{solid}{-1.1}{FFT+PCA+SVM}
+                \legenditem{green!50!black}{dashed}{-1.65}{WST+SVM}
+                \legenditem{green!60!black}{dashed}{-2.2}{CWT+Swin-Tiny}
+                \legenditem{orange}{dotted}{-2.75}{MOMENT+SVM}
+                \legenditem{gray}{dotted}{-3.3}{Raw+PCA+SVM}
+            \end{tikzpicture}
+        \end{column}
+    \end{columns}
 \end{frame}
 
 
