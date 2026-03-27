@@ -53,6 +53,9 @@
     \vskip0pt%
 }
 
+% Reducir padding superior del frametitle
+\addtobeamertemplate{frametitle}{\vspace{-0.3cm}}{}
+
 % Barra azul superior en cada frame (excepto plain)
 \addtobeamertemplate{frametitle}{}{%
     \begin{tikzpicture}[remember picture, overlay]
@@ -160,7 +163,7 @@
             \item Costosa, subjetiva, requiere especialistas certificados
             \item No detecta daño interno (degradación del núcleo de plomo)
         \end{itemize}
-        \item Las vibraciones ambientales (microtremores) son señales \textbf{no invasivas}, medibles 24/7
+        \item Las vibraciones ambientales (microtremores) permiten evaluar el \textbf{estado interno} del aislador en cualquier momento
         \item \textbf{Pregunta de investigación:}
         \begin{itemize}
             \item ¿Se puede clasificar automáticamente el daño en aisladores usando ML/DL sobre señales de vibración?
