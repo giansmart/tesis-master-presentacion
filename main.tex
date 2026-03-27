@@ -335,24 +335,27 @@
 
 % ── SLIDE 12: INTERPRETABILIDAD EIGEN-CAM ──
 \begin{frame}{Interpretabilidad: Eigen-CAM}
+    \small
     \begin{columns}[T]
-        \begin{column}{0.45\textwidth}
-            \begin{itemize}
-                \setlength\itemsep{0.5em}
-                \item ¿Qué frecuencias mira el modelo para decidir?
-                \item A nivel individual: alta variabilidad, no distinguible visualmente
-                \item Al promediar 70 aisladores por clase:
-                \begin{itemize}
-                    \item Banda \textbf{10--13~Hz}: mayor activación en aisladores sanos
-                    \item Resonancia natural del LRB intacto
-                \end{itemize}
-                \item El modelo detecta \textbf{normalidad}, no una ``firma de daño''
-            \end{itemize}
+        \begin{column}{0.30\textwidth}
+            \begin{block}{Pregunta}
+                ¿Qué frecuencias mira el modelo CNN para decidir?
+            \end{block}
         \end{column}
-        \begin{column}{0.53\textwidth}
-            \includegraphics[width=\textwidth]{cap4_eigencam_frecuencias.png}
+        \begin{column}{0.35\textwidth}
+            \begin{block}{Hallazgo (70 aisladores)}
+                Banda \textbf{10--13~Hz}: mayor activación en sanos (resonancia natural del LRB intacto)
+            \end{block}
+        \end{column}
+        \begin{column}{0.30\textwidth}
+            \begin{block}{Conclusión}
+                El modelo detecta \textbf{normalidad}, no una ``firma de daño'' específica
+            \end{block}
         \end{column}
     \end{columns}
+    \vfill
+    \centering
+    \includegraphics[width=0.85\textwidth]{cap4_eigencam_frecuencias.png}
 \end{frame}
 
 
