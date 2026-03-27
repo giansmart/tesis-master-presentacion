@@ -39,18 +39,16 @@
 % Sin barra de navegación
 \setbeamertemplate{navigation symbols}{}
 
-% Footer personalizado: texto izquierda + número derecha
+% Footer personalizado: texto izquierda + número derecha (TikZ overlay)
 \setbeamertemplate{footline}{%
-    \leavevmode%
-    \hbox{%
-        \begin{beamercolorbox}[wd=.7\paperwidth, ht=2.5ex, dp=1.5ex, left]{fg=lightgray}%
-            \hspace{0.5cm}{\color{lightgray}\scriptsize Clasificación de Daño en Aisladores Sísmicos --- Tesis de Maestría}%
-        \end{beamercolorbox}%
-        \begin{beamercolorbox}[wd=.3\paperwidth, ht=2.5ex, dp=1.5ex, rightskip=0.5cm, right]{fg=lightgray}%
-            {\color{lightgray}\scriptsize\insertframenumber/\inserttotalframenumber}%
-        \end{beamercolorbox}%
-    }%
-    \vskip4pt%
+    \begin{tikzpicture}[remember picture, overlay]
+        \node[anchor=south west, font=\scriptsize, text=lightgray]
+            at ([xshift=0.5cm, yshift=0.3cm] current page.south west)
+            {Clasificación de Daño en Aisladores Sísmicos --- Tesis de Maestría};
+        \node[anchor=south east, font=\scriptsize, text=lightgray]
+            at ([xshift=-0.5cm, yshift=0.3cm] current page.south east)
+            {\insertframenumber/\inserttotalframenumber};
+    \end{tikzpicture}%
 }
 
 % Reducir espacio después del frametitle
