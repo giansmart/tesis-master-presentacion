@@ -42,10 +42,10 @@
 % Footer personalizado: texto izquierda + número derecha (TikZ overlay)
 \setbeamertemplate{footline}{%
     \begin{tikzpicture}[remember picture, overlay]
-        \node[anchor=south west, font=\scriptsize, text=lightgray]
+        \node[anchor=south west, font=\tiny, text=lightgray]
             at ([xshift=0.5cm, yshift=0.3cm] current page.south west)
             {Clasificación de Daño en Aisladores Sísmicos --- Tesis de Maestría};
-        \node[anchor=south east, font=\scriptsize, text=lightgray]
+        \node[anchor=south east, font=\tiny, text=lightgray]
             at ([xshift=-0.5cm, yshift=0.3cm] current page.south east)
             {\insertframenumber/\inserttotalframenumber};
     \end{tikzpicture}%
