@@ -319,29 +319,7 @@
 \end{frame}
 
 
-% ── SLIDE 11: HYPERPARAMETER TUNING ──
-\begin{frame}{Optimización de Hiperparámetros}
-    \begin{itemize}
-        \setlength\itemsep{0.4em}
-        \item \textbf{FFT + PCA + RF/SVM} (RandomizedSearchCV, 50 iteraciones):
-        \begin{itemize}
-            \item RF tuneado: 87.8\% --- \textbf{peor} que el original (90.2\%)
-            \item Los defaults de sklearn ya son óptimos para este dataset
-        \end{itemize}
-        \item \textbf{FFT + AE + CNN} (random search, 25 iteraciones):
-        \begin{itemize}
-            \item Mejora marginal: 90.2\% $\rightarrow$ 91.5\% (+1.3\%)
-            \item Hallazgo: ReLU $>$ LeakyReLU, fine-tuning perjudica (overfitting)
-        \end{itemize}
-    \end{itemize}
-    \vspace{0.5cm}
-    \begin{block}{Conclusión clave}
-        El techo de rendimiento está limitado por el \textbf{tamaño del dataset} (82 aisladores), no por los hiperparámetros. \textbf{Más datos $>$ mejor tuning.}
-    \end{block}
-\end{frame}
-
-
-% ── SLIDE 12: INTERPRETABILIDAD EIGEN-CAM ──
+% ── SLIDE 11: INTERPRETABILIDAD EIGEN-CAM ──
 \begin{frame}{Interpretabilidad: Eigen-CAM}
     \small
     \begin{columns}[T]
@@ -449,7 +427,15 @@
 \end{frame}
 
 
-% ── SLIDE 16: CIERRE ──
+% ── SLIDE: PROTOTIPO DE DESPLIEGUE ──
+\begin{frame}{Prototipo: Arquitectura de Despliegue}
+    \centering
+    \includegraphics[width=0.92\textwidth]{recom_secuencia_impl.png}\\[-0.3em]
+    {\color{lightgray}\tiny Fuente: Elaboración propia}
+\end{frame}
+
+
+% ── SLIDE CIERRE ──
 {
 \setbeamertemplate{footline}{}
 \setbeamercolor{background canvas}{bg=mainblue!60}
